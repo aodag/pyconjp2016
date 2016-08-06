@@ -32,6 +32,8 @@
 
 *** PEP 513 -- A Platform Tag for Portable Linux Built Distributions
 
+*** PEP 516 -- Build system abstraction for pip/conda etc
+
 *** PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
 
 ** pypa
@@ -42,6 +44,10 @@
 *** wheel
 *** auditwheel
 *** distlib
+
+    - [[http://distlib.readthedocs.io/en/latest/][distlib documentation]]
+    - [[https://pypi.python.org/pypi/distlib][pypa distlib]]
+
 *** packaging
 
 ** python
@@ -60,12 +66,91 @@
 
 ** プログラミングPythonパッケージ
 
+   - distlibはPEPで決まったことを実装しているライブラリ
+   - distlibを使えばパッケージを操作できる（PEPで決まってる範囲で）
+
+     #+BEGIN_SRC python
+
+>>> import sys
+>>> import os
+>>> sys.path.append(os.path.join(os.getcwd(), 'distlib-0.2.3-py3-none-any.whl'))
+>>> import distlib
+>>> distlib
+
+     #+END_SRC
+
 *** パッケージング
 **** パッケージメタデータ
+
+
+
 **** wheelパッケージを作成する
+
+     - distlib.wheel
+
 *** 配布
+
+**** github リリース
+
+**** pypi に登録
+
 **** simple package repository
+
 *** インストール
+
 **** wheelパッケージをインストールする
+
+     - distlib.locators
+     - distlib.wheel
+
+**** インストール一覧
+
+     - distlib.database
+
+
+     #+BEGIN_SRC python
+>>> import distlib.database
+>>> dist_path = distlib.database.DistributionPath()
+>>> for dist in dist_path.get_distributions():
+...     print(dist)
+...
+pip 8.1.2
+distlib 0.2.3
+wheel 0.29.0
+setuptools 25.1.6
+
+     #+END_SRC
+
+**** ライブラリ依存ツリー
+
+     #+BEGIN_SRC python
+
+>>> graph = distlib.database.make_graph(list(dist_path.get_distributions()))
+>>> graph
+translationstring 1.3
+PasteDeploy 1.5.2
+setuptools 25.1.6
+wheel 0.29.0
+WebOb 1.6.1
+zope.interface 4.2.0
+    setuptools 25.1.6 [setuptools]
+pyramid 1.7
+    zope.deprecation 4.1.2 [zope.deprecation (>=3.5.0)]
+        setuptools 25.1.6 [setuptools]
+    translationstring 1.3 [translationstring (>=0.4)]
+    WebOb 1.6.1 [WebOb (>=1.3.1)]
+    repoze.lru 0.6 [repoze.lru (>=0.4)]
+    zope.interface 4.2.0 [zope.interface (>=3.8.0)]
+        setuptools 25.1.6 [setuptools]
+    PasteDeploy 1.5.2 [PasteDeploy (>=1.5.0)]
+    setuptools 25.1.6 [setuptools]
+    venusian 1.0 [venusian (>=1.0a3)]
+repoze.lru 0.6
+zope.deprecation 4.1.2
+    setuptools 25.1.6 [setuptools]
+venusian 1.0
+pip 8.1.2
+distlib 0.2.3
+     #+END_SRC
 *** 実行
 **** sys.path
