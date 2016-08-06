@@ -1,0 +1,71 @@
+* パッケージングを支える技術
+** PEP
+   - https://packaging.python.org/specifications/
+
+*** PEP 345 -- Metadata for Python Software Packages 1.2
+
+*** PEP 376 -- Database of Installed Python Distributions
+
+*** PEP 425 -- Compatibility Tags for Built Distributions
+
+*** PEP 426 -- Metadata for Python Software Packages 2.0
+
+    - PEP 425 , defining a compatibility tagging mechanism for binary files
+    - PEP 427 , defining the pre-built "wheel" format
+    - PEP 440 , covering the versioning identification and selection scheme
+    - PEP 503 , /simple/ package repository API
+    - PEP 508 , covering dependency declarations and environment markers
+    - PEP 513 , defining the "manylinux1" compatibility tag
+    - PEP 518 , defining a static config file for sdist build system dependencies
+
+*** PEP 427 -- The Wheel Binary Package Format 1.0
+
+*** PEP 496 -- Environment Markers
+
+*** PEP 440 -- Version Identification and Dependency Specification
+
+*** PEP 491 -- The Wheel Binary Package Format 1.9
+
+*** PEP 503 -- Simple Repository API
+
+*** PEP 508 -- Dependency specification for Python Software Packages
+
+*** PEP 513 -- A Platform Tag for Portable Linux Built Distributions
+
+*** PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
+
+** pypa
+
+*** setuptools
+*** virtualenv
+*** pip
+*** wheel
+*** auditwheel
+*** distlib
+*** packaging
+
+** python
+
+*** PYTHONPATH
+
+*** .pth
+
+*** site-packages/user-site-packages
+
+*** distutils
+
+** sdistとはなにか？
+
+** manylinux1
+
+** プログラミングPythonパッケージ
+
+*** パッケージング
+**** パッケージメタデータ
+**** wheelパッケージを作成する
+*** 配布
+**** simple package repository
+*** インストール
+**** wheelパッケージをインストールする
+*** 実行
+**** sys.path
