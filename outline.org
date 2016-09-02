@@ -1,70 +1,120 @@
-* パッケージングを支える技術
-** PEP
-   - https://packaging.python.org/specifications/
+#+TITLE: パッケージングを支える技術
+#+AUTHOR: Atsushi Odagiri
+#+SUBTITLE: PyCon JP 2016
+#+LATEX_CLASS: bxjsslide
+#+OPTIONS: toc:nil H:4 ^:nil
+#+LATEX_HEADER: \let\stdsection\section
+#+LATEX_HEADER:\renewcommand\section{\clearpage\stdsection}
+#+LATEX_HEADER: \let\stdsubsection\subsection
+#+LATEX_HEADER:\renewcommand\subsection{\clearpage\stdsubsection}
 
-*** PEP 345 -- Metadata for Python Software Packages 1.2
+* お前だれよ
 
-*** PEP 376 -- Database of Installed Python Distributions
+  - 小田切篤
+  - ,(´_・ω・)_
+  - BeProud
+  - Pylons/Pyramid
 
-*** PEP 425 -- Compatibility Tags for Built Distributions
+* これまでのお話
 
-*** PEP 426 -- Metadata for Python Software Packages 2.0
+  - 2013 パッケージングの今と未来
+  - 2014 パッケージングの今
+  - 2015 Packaging最前線
 
-    - PEP 425 , defining a compatibility tagging mechanism for binary files
-    - PEP 427 , defining the pre-built "wheel" format
-    - PEP 440 , covering the versioning identification and selection scheme
-    - PEP 503 , /simple/ package repository API
-    - PEP 508 , covering dependency declarations and environment markers
-    - PEP 513 , defining the "manylinux1" compatibility tag
-    - PEP 518 , defining a static config file for sdist build system dependencies
+* アジェンダ
 
-*** PEP 427 -- The Wheel Binary Package Format 1.0
+  - PEP
+  - PyPA
+  - sdist
+  - manylinux
+  - パッケージングを支える技術
 
-*** PEP 496 -- Environment Markers
+* パッケージング関連のPEP
 
-*** PEP 440 -- Version Identification and Dependency Specification
+  - https://packaging.python.org/specifications/
+  - setuptools/easy_install/egg はPEPと関係なく作られていた
 
-*** PEP 491 -- The Wheel Binary Package Format 1.9
+** PEP 345 -- Metadata for Python Software Packages 1.2
 
-*** PEP 503 -- Simple Repository API
 
-*** PEP 508 -- Dependency specification for Python Software Packages
+** PEP 376 -- Database of Installed Python Distributions
 
-*** PEP 513 -- A Platform Tag for Portable Linux Built Distributions
+   - パッケージによってインストールされたファイルの情報
+   - どのモジュールがどのパッケージでインストールされたか
+   - インストール時のファイルのハッシュ
 
-*** PEP 516 -- Build system abstraction for pip/conda etc
+** TODO PEP 425 -- Compatibility Tags for Built Distributions
 
-*** PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
+** PEP 426 -- Metadata for Python Software Packages 2.0
+   - パッケージのメタデータ
+   - ソースコード以外の情報
+   - 作者やライセンスなどの情報
+   - 依存ライブラリなどの構成
+   - エントリポイントなどのプラガブルな仕組み
+   - スクリプトの指定
+*** TODO メタデータ2.0に関連するPEP
 
-** pypa
+   - PEP 425 , defining a compatibility tagging mechanism for binary files
+   - PEP 427 , defining the pre-built "wheel" format
+   - PEP 440 , covering the versioning identification and selection scheme
+   - PEP 503 , /simple/ package repository API
+   - PEP 508 , covering dependency declarations and environment markers
+   - PEP 513 , defining the "manylinux1" compatibility tag
+   - PEP 518 , defining a static config file for sdist build system dependencies
 
-*** setuptools
-*** virtualenv
-*** pip
-*** wheel
-*** auditwheel
-*** distlib
+** TODO PEP 427 -- The Wheel Binary Package Format 1.0
 
-    - [[http://distlib.readthedocs.io/en/latest/][distlib documentation]]
-    - [[https://pypi.python.org/pypi/distlib][pypa distlib]]
+** TODO PEP 496 -- Environment Markers
 
-*** packaging
+** TODO PEP 440 -- Version Identification and Dependency Specification
 
-** python
+** TODO PEP 491 -- The Wheel Binary Package Format 1.9
 
-*** PYTHONPATH
+** TODO PEP 503 -- Simple Repository API
 
-*** .pth
+** TODO PEP 508 -- Dependency specification for Python Software Packages
 
-*** site-packages/user-site-packages
+** TODO PEP 513 -- A Platform Tag for Portable Linux Built Distributions
 
-*** distutils
+** TODO PEP 516 -- Build system abstraction for pip/conda etc
 
-** sdistとはなにか？
+** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
 
-** manylinux1
+* pypa
 
-** プログラミングPythonパッケージ
+- Python Packaging Authority
+- パッケージングツールをメンテするグループ
+
+** TODO setuptools
+** TODO virtualenv
+** TODO pip
+** TODO wheel
+** TODO auditwheel
+** TODO distlib
+
+   - [[http://distlib.readthedocs.io/en/latest/][distlib documentation]]
+   - [[https://pypi.python.org/pypi/distlib][pypa distlib]]
+
+** TODO packaging
+
+* TODO python標準の仕組み
+
+** TODO PYTHONPATH
+
+** TODO .pth
+
+** TODO site-packages/user-site-packages
+
+** TODO distutils
+
+* TODO sdistとはなにか？
+
+  - setuptoolsとpipの実装でなんとなく決まっている
+  - `setup.py install` ができればsdist?
+
+* TODO manylinux1
+
+* TODO プログラミングPythonパッケージ
 
    - distlibはPEPで決まったことを実装しているライブラリ
    - distlibを使えばパッケージを操作できる（PEPで決まってる範囲で）
@@ -79,31 +129,34 @@
 
      #+END_SRC
 
-*** パッケージング
-**** パッケージメタデータ
+* 配布物の作成
 
+  - 現状でPEPで決まってる配布物のフォーマットはwheelのみ
+  - sdistはまだ議論中
 
+** TODO 配布物作成に必要な情報
+** TODO パッケージメタデータ
 
-**** wheelパッケージを作成する
+** TODO wheelパッケージを作成する
 
-     - distlib.wheel
+    - distlib.wheel
 
-*** 配布
+* パッケージの配布
 
-**** github リリース
+** TODO github リリース
 
-**** pypi に登録
+** TODO pypi に登録
 
-**** simple package repository
+** TODO simple package repository
 
-*** インストール
+* TODO インストール
 
-**** wheelパッケージをインストールする
+** TODO wheelパッケージをインストールする
 
-     - distlib.locators
-     - distlib.wheel
+    - distlib.locators
+    - distlib.wheel
 
-**** インストール一覧
+** TODO インストール一覧
 
      - distlib.database
 
@@ -121,7 +174,7 @@ setuptools 25.1.6
 
      #+END_SRC
 
-**** ライブラリ依存ツリー
+** TODO ライブラリ依存ツリー
 
      #+BEGIN_SRC python
 
@@ -152,5 +205,5 @@ venusian 1.0
 pip 8.1.2
 distlib 0.2.3
      #+END_SRC
-*** 実行
-**** sys.path
+* TODO 実行
+** TODO sys.path
