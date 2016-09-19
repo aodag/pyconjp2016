@@ -29,7 +29,7 @@
   - manylinux
   - パッケージングを支える技術
 
-* パッケージング関連のPEP
+* パッケージングを支えるPEP
 
   - https://packaging.python.org/specifications/
   - setuptools/easy_install/egg はPEPと関係なく作られていた
@@ -80,7 +80,8 @@
 
 ** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
 
-* pypa
+* パッケージングを支えるツール
+** PyPA
 
 - Python Packaging Authority
 - パッケージングツールをメンテするグループ
@@ -89,13 +90,22 @@
 ** TODO virtualenv
 ** TODO pip
 ** TODO wheel
+
+   - wheel形式パッケージを作成するツール
+   - setuptools に bdist_wheel サブコマンドを追加する
 ** TODO auditwheel
+
+   - manylinux1 wheel を作成するツール
 ** TODO distlib
 
+   - PEPを実装しているライブラリ
+   - pipに同梱されている
    - [[http://distlib.readthedocs.io/en/latest/][distlib documentation]]
    - [[https://pypi.python.org/pypi/distlib][pypa distlib]]
 
 ** TODO packaging
+   - PEPを実装しているライブラリ
+   - distlibとの違いはなんなのか？
 
 * TODO python標準の仕組み
 
