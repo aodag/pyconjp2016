@@ -23,11 +23,11 @@
 
 * アジェンダ
 
-  - PEP
-  - PyPA
-  - sdist
-  - manylinux
-  - パッケージングを支える技術
+  - パッケージングを支えるPEP
+  - パッケージングを支えるツール
+  - ソースパッケージ
+  - バイナリパッケージ
+  - パッケージングを支える技術に支えられてみよう
 
 * パッケージングを支えるPEP
 
@@ -138,6 +138,13 @@
 >>> distlib
 
      #+END_SRC
+* TODO distlibでできること
+
+  - wheelパッケージ作成
+  - wheelパッケージインストール
+  - メタデータ作成
+  - パッケージリポジトリからのダウンロード
+  - インストール済パッケージのリストアップ
 
 * 配布物の作成
 
@@ -147,23 +154,36 @@
 ** TODO 配布物作成に必要な情報
 ** TODO パッケージメタデータ
 
+    - dist-info ディレクトリ
+    - pydist.json/package.json
+
 ** TODO wheelパッケージを作成する
 
     - distlib.wheel
 
 * パッケージの配布
 
-** TODO github リリース
-
-** TODO pypi に登録
-
 ** TODO simple package repository
+
+   - pypiもこの形式
+   - 登録やアップロード方法は決められてない
+   - `httplib.server` などでも実現可能
+
+** TODO wheelファイルをsimple package repository形式に配置する
+
+   - distlib.wheelでメタデータを取得
+   - パッケージ名でディレクトリを作成
+   - wheelファイルをコピー
+
 
 * TODO インストール
 
+** TODO パッケージをリポジトリからダウンロードする
+
+   - distlib.locators
+
 ** TODO wheelパッケージをインストールする
 
-    - distlib.locators
     - distlib.wheel
 
 ** TODO インストール一覧
