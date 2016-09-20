@@ -77,20 +77,13 @@
 
 ** TODO PEP 440 -- Version Identification and Dependency Specification
 
-** TODO PEP 491 -- The Wheel Binary Package Format 1.9
-
 ** TODO PEP 503 -- Simple Repository API
 
 ** TODO PEP 508 -- Dependency specification for Python Software Packages
 
-** TODO PEP 513 -- A Platform Tag for Portable Linux Built Distributions
 
 ** TODO PEP 516 -- Build system abstraction for pip/conda etc
 
-** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
-   - インストールに必要なツールを記述
-   - pyproject.toml
-   - TOMLフォーマット
 
 * パッケージングを支えるツール
 ** PyPA
@@ -110,7 +103,12 @@
    - setuptools に bdist_wheel サブコマンドを追加する
 ** TODO auditwheel
 
-   - manylinux1 wheel を作成するツール
+   - manylinux1後述 wheel を作成するツール
+
+** TODO twine
+
+   - パッケージアップローダー
+
 ** TODO distlib
 
    - PEPを実装しているライブラリ
@@ -124,15 +122,35 @@
 
 * TODO python標準の仕組み
 
+  - pypaツールはどのようにパッケージをインストールしてpythonインタプリタに認識させるのか？
+
 ** TODO PYTHONPATH
 
-** TODO .pth
+   - 環境変数
+   - ここで複数のディレクトリを指定できる
+   - 指定した内容は `sys.path` に入る
+   - モジュールやパッケージを `import` するときは `sys.path` のディレクトリを探しに行く
+
 
 ** TODO site-packages/user-site-packages
 
+   - サードパーティ製ライブラリの標準インストール先
+   - debianではさらに dist-packages という謎のディレクトリが存在する
+
+** TODO .pth
+
+   - site-packages などに配置されるファイル
+   - 中にファイルパスを羅列しておくと、インタプリタ起動時にすべて `sys.path` に追加される
+   - `./` 以外で始まる行があるとpythonコードとして実行されるという謎仕様
+   - easy_install が活用していた
+
 ** TODO distutils
 
-* TODO manylinux1
+   - setup.py で使う setup 関数の大元
+   - setuptoolsはdistutilsの拡張
+
+* TODO wheel
+** TODO PEP 513 -- A Platform Tag for Portable Linux Built Distributions
   - linux向けのwheelを作るために決められた
 ** Linux向けwheelパッケージのつらいところ
 
@@ -148,6 +166,8 @@
 
    - manylinux1を満たしているかチェック
    - 依存ライブラリをwheelに同梱させる
+
+** TODO PEP 491 -- The Wheel Binary Package Format 1.9
 
 * TODO sdistとはなにか？
 
@@ -166,11 +186,14 @@
    - pipがsdistを展開する
    - pipがsetup.py bdist_wheelを実行する
    - できあがったwheelパッケージをpipがインストールする
+   - setup.py install は関係なかった
 
-** pypi.toml
-
+** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
    - パッケージング方法やそれに必要なツールを支持する
    - pypi上でwheel作成する目的？
+   - インストールに必要なツールを記述
+   - pyproject.toml
+   - TOMLフォーマット
 
 * TODO プログラミングPythonパッケージ
 
