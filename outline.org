@@ -27,25 +27,18 @@
 
 * アジェンダ
 
-  - パッケージングを支えるPEP
   - パッケージングを支えるツール
   - ソースパッケージ
   - バイナリパッケージ
   - パッケージングを支える技術に支えられてみよう
 
-* パッケージングを支えるPEP
+* TODO パッケージングを支えるPEP
 
   - https://packaging.python.org/specifications/
   - setuptools/easy_install/egg はPEPと関係なく作られていた
 
 ** TODO PEP 345 -- Metadata for Python Software Packages 1.2
 
-
-** PEP 376 -- Database of Installed Python Distributions
-
-   - パッケージによってインストールされたファイルの情報
-   - どのモジュールがどのパッケージでインストールされたか
-   - インストール時のファイルのハッシュ
 
 ** TODO PEP 425 -- Compatibility Tags for Built Distributions
 
@@ -57,32 +50,12 @@
    - エントリポイントなどのプラガブルな仕組み
    - スクリプトの指定
 
-** TODO メタデータ2.0に関連するPEP
-
-   - PEP 425 , defining a compatibility tagging mechanism for binary files
-   - PEP 427 , defining the pre-built "wheel" format
-   - PEP 440 , covering the versioning identification and selection scheme
-   - PEP 503 , /simple/ package repository API
-
-** TODO メタデータ2.0に関連するPEP
-   - PEP 508 , covering dependency declarations and environment markers
-   - PEP 513 , defining the "manylinux1" compatibility tag
-   - PEP 518 , defining a static config file for sdist build system dependencies
-
-** TODO PEP 427 -- The Wheel Binary Package Format 1.0
-
-   - バイナリ形式の配布フォーマット
-
 ** TODO PEP 496 -- Environment Markers
 
 ** TODO PEP 440 -- Version Identification and Dependency Specification
 
-** TODO PEP 503 -- Simple Repository API
-
 ** TODO PEP 508 -- Dependency specification for Python Software Packages
 
-
-** TODO PEP 516 -- Build system abstraction for pip/conda etc
 
 
 * パッケージングを支えるツール
@@ -90,35 +63,56 @@
 
 - Python Packaging Authority
 - パッケージングツールをメンテするグループ
+- github.com/pypa
+- bitbucket.org/pypa
 
-** TODO setuptools
+** setuptools
+
    - 配布物を作成する
-** TODO virtualenv
+   - setup.pyで使われる
+   - easy_install使うのはもうやめましょう
+   - distributeも、いい加減忘れてください
 
-** TODO pip
+** 今日のsetuptools
+   - 27.2.0
+   - 去年(2016/9/6)18.3
+
+** virtualenv
+
+   - python環境を仮想化する
+   - プロジェクトごとに使うライブラリを隔離
+   - python3.3以降では同等の機能がpython本体から提供されている(pyvenv)
+
+** pip
+
    - インストーラ
-** TODO wheel
+   - sdistとwheelを取り扱える
+   - requirements.txt でライブラリを構成管理する
+
+** wheel
 
    - wheel形式パッケージを作成するツール
    - setuptools に bdist_wheel サブコマンドを追加する
+
 ** TODO auditwheel
 
-   - manylinux1後述 wheel を作成するツール
+   - Linux向けのwheelを
 
-** TODO twine
+** ツールの導入方法
 
-   - パッケージアップローダー
+   - python3.4以降ではpip,setuptoolsを導入するensurepipが入っているのでpythonインストール後にpipを利用可能
+   - virtualenvは環境作成時にpip,setuptools,wheelを導入する
+   - pyvenvはバージョンによって作成後のツール導入が異なる
+     - 3.3 なし
+     - 3.4以降 ensurepipでpip,setuptoolsが導入される
+   - どの環境でもget-pip.py でpip,setuptools,wheelを最新にできる
 
-** TODO distlib
+** 例えばubuntuのpyvenv
 
-   - PEPを実装しているライブラリ
-   - pipに同梱されている
-   - [[http://distlib.readthedocs.io/en/latest/][distlib documentation]]
-   - [[https://pypi.python.org/pypi/distlib][pypa distlib]]
-
-** TODO packaging
-   - PEPを実装しているライブラリ
-   - distlibとの違いはなんなのか？
+   - 14.04 の python3.4 は ensurepipが消されているため、--without-pipをつけないとエラーになる
+   - 16.04 の python3.5はensurepipがpkg_resources-0.0.0という謎のパッケージメタデータを作成する
+     - そのままpip freezeしたrequirements.txtを作ると他の環境でエラーになる
+   - 回避策は --without-pip で環境を作ってからget-pip.py でツールを導入する
 
 * TODO python標準の仕組み
 
@@ -150,6 +144,11 @@
    - setuptoolsはdistutilsの拡張
 
 * TODO wheel
+** TODO PEP 427 -- The Wheel Binary Package Format 1.0
+
+   - バイナリ形式の配布フォーマット
+   - 既に利用されている
+
 ** TODO PEP 513 -- A Platform Tag for Portable Linux Built Distributions
   - linux向けのwheelを作るために決められた
 ** Linux向けwheelパッケージのつらいところ
@@ -191,24 +190,29 @@
 ** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
    - パッケージング方法やそれに必要なツールを支持する
    - pypi上でwheel作成する目的？
-   - インストールに必要なツールを記述
+   - パッケージングに必要なツールを記述
    - pyproject.toml
    - TOMLフォーマット
+
+** TODO PEP 516 -- Build system abstraction for pip/conda etc
+
+   - ツールの指定方法
 
 * TODO プログラミングPythonパッケージ
 
    - distlibはPEPで決まったことを実装しているライブラリ
    - distlibを使えばパッケージを操作できる（PEPで決まってる範囲で）
+   - setuptoolsに依存せずにパッケージングしてみよう
 
-     #+BEGIN_SRC python
+        #+BEGIN_SRC python
 
->>> import sys
->>> import os
->>> sys.path.append(os.path.join(os.getcwd(), 'distlib-0.2.3-py3-none-any.whl'))
->>> import distlib
->>> distlib
+   >>> import sys
+   >>> import os
+   >>> sys.path.append(os.path.join(os.getcwd(), 'distlib-0.2.3-py3-none-any.whl'))
+   >>> import distlib
+   >>> distlib
 
-     #+END_SRC
+        #+END_SRC
 * TODO distlibでできること
 
   - wheelパッケージ作成
@@ -237,7 +241,7 @@
   - simple package repository形式のサイトで公開する
   - ダウンロードしてインストールする
 
-** TODO simple package repository
+** TODO PEP 503 -- Simple Repository API
 
    - pypiもこの形式
    - 登録やアップロード方法は決められてない
@@ -261,6 +265,12 @@
     - distlib.wheel
 
 ** TODO インストール一覧
+** PEP 376 -- Database of Installed Python Distributions
+
+   - パッケージによってインストールされたファイルの情報
+   - どのモジュールがどのパッケージでインストールされたか
+   - インストール時のファイルのハッシュ
+
 
      - distlib.database
 
