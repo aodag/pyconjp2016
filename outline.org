@@ -117,12 +117,45 @@
 
 ** TODO distutils
 
+* TODO manylinux1
+  - linux向けのwheelを作るために決められた
+** Linux向けwheelパッケージのつらいところ
+
+   - どのようなライブラリがあると想定してよいか？
+   - 依存するライブラリのABIが合わないなどのトラブル
+   - 依存ライブラリ同梱のためのハックがsetup.pyに散らばる
+
+** manylinux1が想定するLinux環境
+
+   - Centos5.11
+
+** auditwheel
+
+   - manylinux1を満たしているかチェック
+   - 依存ライブラリをwheelに同梱させる
+
 * TODO sdistとはなにか？
 
   - setuptoolsとpipの実装でなんとなく決まっている
   - `setup.py install` ができればsdist?
+** setuptoolsがなくてもwheelパッケージは作成できる
+   - wheelツールはsetuptoolsと独立して作られている
+   - distlibにもwheelを作成する処理が実装されている
+** sdistを考え直す意味
+   - setuptools依存からの脱却
+   - 明確なインストールフロー
 
-* TODO manylinux1
+** 現状
+
+   - pipがsdistをダウンロードする
+   - pipがsdistを展開する
+   - pipがsetup.py bdist_wheelを実行する
+   - できあがったwheelパッケージをpipがインストールする
+
+** pypi.toml
+
+   - パッケージング方法やそれに必要なツールを支持する
+   - pypi上でwheel作成する目的？
 
 * TODO プログラミングPythonパッケージ
 
@@ -162,6 +195,9 @@
     - distlib.wheel
 
 * パッケージの配布
+  - 作成したパッケージを公開してインストール可能にする
+  - simple package repository形式のサイトで公開する
+  - ダウンロードしてインストールする
 
 ** TODO simple package repository
 
