@@ -11,9 +11,13 @@
 * お前だれよ
 
   - 小田切篤
-  - ,(´_・ω・)_
   - BeProud
   - Pylons/Pyramid
+
+    #+ATTR_LATEX: :width 0.3\textwidth
+    [[./pylons-positive.png]]
+    #+ATTR_LATEX: :width 0.3\textwidth
+    [[./pyramid-positive.png]]
 
 * これまでのお話
 
@@ -34,7 +38,7 @@
   - https://packaging.python.org/specifications/
   - setuptools/easy_install/egg はPEPと関係なく作られていた
 
-** PEP 345 -- Metadata for Python Software Packages 1.2
+** TODO PEP 345 -- Metadata for Python Software Packages 1.2
 
 
 ** PEP 376 -- Database of Installed Python Distributions
@@ -52,17 +56,22 @@
    - 依存ライブラリなどの構成
    - エントリポイントなどのプラガブルな仕組み
    - スクリプトの指定
-*** TODO メタデータ2.0に関連するPEP
+
+** TODO メタデータ2.0に関連するPEP
 
    - PEP 425 , defining a compatibility tagging mechanism for binary files
    - PEP 427 , defining the pre-built "wheel" format
    - PEP 440 , covering the versioning identification and selection scheme
    - PEP 503 , /simple/ package repository API
+
+** TODO メタデータ2.0に関連するPEP
    - PEP 508 , covering dependency declarations and environment markers
    - PEP 513 , defining the "manylinux1" compatibility tag
    - PEP 518 , defining a static config file for sdist build system dependencies
 
 ** TODO PEP 427 -- The Wheel Binary Package Format 1.0
+
+   - バイナリ形式の配布フォーマット
 
 ** TODO PEP 496 -- Environment Markers
 
@@ -79,6 +88,9 @@
 ** TODO PEP 516 -- Build system abstraction for pip/conda etc
 
 ** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
+   - インストールに必要なツールを記述
+   - pyproject.toml
+   - TOMLフォーマット
 
 * パッケージングを支えるツール
 ** PyPA
@@ -87,8 +99,11 @@
 - パッケージングツールをメンテするグループ
 
 ** TODO setuptools
+   - 配布物を作成する
 ** TODO virtualenv
+
 ** TODO pip
+   - インストーラ
 ** TODO wheel
 
    - wheel形式パッケージを作成するツール
