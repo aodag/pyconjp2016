@@ -293,10 +293,8 @@ build:
    - でも多分pyproject.tomの tool セクションが同じものを指しているはず
 
 
-* TODO プログラミングPythonパッケージ
+* プログラミングPythonパッケージ
 
-   - distlibはPEPで決まったことを実装しているライブラリ
-   - distlibを使えばパッケージを操作できる（PEPで決まってる範囲で）
    - setuptoolsに依存せずにパッケージングしてみよう
 
 ** distlibでできること
@@ -306,6 +304,11 @@ build:
    - メタデータ作成
    - パッケージリポジトリからのダウンロード
    - インストール済パッケージのリストアップ
+
+** bib - reversed pip
+
+   - distlibと標準ライブラリのみで実行するパッケージングツール
+   - 本日作成しました
 
 ** distlibを使う準備
          #+BEGIN_SRC python
@@ -321,52 +324,64 @@ build:
 
          #+END_SRC
 
-* 配布物の作成
+* プロジェクトの作成
 
-  - 現状でPEPで決まってる配布物のフォーマットはwheelのみ
-  - sdistはまだ議論中
+  - bib.init_project
 
-** TODO 配布物作成に必要な情報
-** TODO パッケージメタデータ
+** パッケージメタデータ
 
     - dist-info ディレクトリ
     - pydist.json/package.json
 
-** TODO wheelパッケージを作成する
+* パッケージの作成
+** wheelパッケージを作成する
 
-    - distlib.wheel
+    - 作業ディレクトリを作成
+    - パッケージ名.dist-info ディレクトリを作成
+    - dist-info ディレクトリ以下に pydist.json をコピー
+    - インストール対象を作業ディレクトリにコピー
+    - distlib.wheelでWheelを作成する
 
 * パッケージの配布
   - 作成したパッケージを公開してインストール可能にする
   - simple package repository形式のサイトで公開する
   - ダウンロードしてインストールする
 
-** TODO PEP 503 -- Simple Repository API
+** PEP 503 -- Simple Repository API
 
    - pypiもこの形式
    - 登録やアップロード方法は決められてない
    - `httplib.server` などでも実現可能
 
-** TODO wheelファイルをsimple package repository形式に配置する
+** wheelファイルをsimple package repository形式に配置する
 
    - distlib.wheelでメタデータを取得
    - パッケージ名でディレクトリを作成
    - wheelファイルをコピー
+   - そのディレクトリを対象に `httplib.server` を立ち上げる
 
 
-* TODO インストール
+* インストール
 
-** TODO パッケージをリポジトリからダウンロードする
+  - パッケージをリポジトリからダウンロード
+  - パッケージのメタデータを読み取る
+  - Wheelで読み取って、対象ディレクトリにインストール
+
+** パッケージをリポジトリからダウンロードする
 
    - distlib.locators
+   - SimpleScrapingLocator
+   - result.download_urls でURLを取得
+   - 一時ディレクトリに保存
 
-** TODO wheelパッケージをインストールする
+** wheelパッケージをインストールする
 
-    - distlib.wheel
+   - distlib.scripts ScriptMakerを作成
+   - distlib.wheelの install メソッドでインストール
 
-** TODO インストール一覧
-** PEP 376 -- Database of Installed Python Distributions
+** インストール一覧
 
+   - PEP 376 -- Database of Installed Python Distributions
    - パッケージによってインストールされたファイルの情報
    - どのモジュールがどのパッケージでインストールされたか
    - インストール時のファイルのハッシュ
@@ -374,49 +389,8 @@ build:
 
      - distlib.database
 
+* まとめ
 
-     #+BEGIN_SRC python
->>> import distlib.database
->>> dist_path = distlib.database.DistributionPath()
->>> for dist in dist_path.get_distributions():
-...     print(dist)
-...
-pip 8.1.2
-distlib 0.2.3
-wheel 0.29.0
-setuptools 25.1.6
-
-     #+END_SRC
-
-** TODO ライブラリ依存ツリー
-
-     #+BEGIN_SRC python
-
->>> graph = distlib.database.make_graph(list(dist_path.get_distributions()))
->>> graph
-translationstring 1.3
-PasteDeploy 1.5.2
-setuptools 25.1.6
-wheel 0.29.0
-WebOb 1.6.1
-zope.interface 4.2.0
-    setuptools 25.1.6 [setuptools]
-pyramid 1.7
-    zope.deprecation 4.1.2 [zope.deprecation (>=3.5.0)]
-        setuptools 25.1.6 [setuptools]
-    translationstring 1.3 [translationstring (>=0.4)]
-    WebOb 1.6.1 [WebOb (>=1.3.1)]
-    repoze.lru 0.6 [repoze.lru (>=0.4)]
-    zope.interface 4.2.0 [zope.interface (>=3.8.0)]
-        setuptools 25.1.6 [setuptools]
-    PasteDeploy 1.5.2 [PasteDeploy (>=1.5.0)]
-    setuptools 25.1.6 [setuptools]
-    venusian 1.0 [venusian (>=1.0a3)]
-repoze.lru 0.6
-zope.deprecation 4.1.2
-    setuptools 25.1.6 [setuptools]
-venusian 1.0
-pip 8.1.2
-distlib 0.2.3
-     #+END_SRC
-* TODO 実行
+  - setuptoolsやpipがなくてもパッケージングはできる
+  - いろんなツールがエコシステムに参加できるようにsdistの定義が検討されている
+  - wheelはがんがん使いましょう
