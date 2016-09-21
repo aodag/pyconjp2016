@@ -11,15 +11,16 @@
 * お前だれよ
 
   - 小田切篤
+  - Beproud, Inc.
 
-    #+ATTR_LATEX: :width 0.2\textwidth
-    [[./logo_beproud.png]]
-    #+ATTR_LATEX: :width 0.2\textwidth
-    [[./pylons-positive.png]]
-    #+ATTR_LATEX: :width 0.2\textwidth
-    [[./pyramid-positive.png]]
-    #+ATTR_LATEX: :width 0.2\textwidth
-    [[./2954520.png]]
+  #+ATTR_LATEX: :width 0.2\textwidth
+  [[./logo_beproud.png]]
+  #+ATTR_LATEX: :width 0.2\textwidth
+  [[./pylons-positive.png]]
+  #+ATTR_LATEX: :width 0.2\textwidth
+  [[./pyramid-positive.png]]
+  #+ATTR_LATEX: :width 0.2\textwidth
+  [[./2954520.png]]
 
 * これまでのお話
 
@@ -35,6 +36,9 @@
   - パッケージングを支える技術に支えられてみよう
 
 * パッケージングを支えるツール
+
+  - PyPA ってなに？
+
 ** PyPA
 
 - Python Packaging Authority
@@ -127,28 +131,121 @@
    - 昔はこれで setup.py install などとしていた
 
 * バイナリディストリビューション wheel
+
+  - wheelもう使ってるよね？
+
 ** PEP 427 -- The Wheel Binary Package Format 1.0
 
    - バイナリ形式の配布フォーマット
    - 既に利用されている
    - C拡張を含まない場合はpy2.py3で共通の配布物
 
-** TODO PEP 513 -- A Platform Tag for Portable Linux Built Distributions
-  - linux向けのwheelを作るために決められた
+** PEP 513 -- A Platform Tag for Portable Linux Built Distributions
+
+   - これまではLinux向けwheelはpypiにあげられなかった
+   - manylinux1
+   - linux向けのwheelを作るために決められた
+
 ** Linux向けwheelパッケージのつらいところ
 
    - どのようなライブラリがあると想定してよいか？
    - 依存するライブラリのABIが合わないなどのトラブル
    - 依存ライブラリ同梱のためのハックがsetup.pyに散らばる
 
+** Python の ABI
+
+   - pymalloc
+   - ucs-4
+   - python3ではすべてucs-4ビルド
+
+** wheelの名前規約からわかること
+
+   - numpy-1.11.2rc1-cp35-cp35m-manylinux1_x86_64.whl
+
+     - numpy という名前のパッケージ
+     - 1.11.2rc1 というバージョン
+     - CPython 3.5 のAPI
+     - CPython pymallocビルドのABI
+     - manylinux1_x86_64 プラットフォーム
+
+
 ** TODO manylinux1が想定するLinux環境
 
-   - Centos5.11
+   - Centos5.11相当
+   - x86とx86_64の両方
+   - その他前提としてよいライブラリ
 
-** TODO auditwheel
 
+** manylinux1でインストールを期待してよいライブラリ(1)
+
+   - libpanelw.so.5
+   - libncursesw.so.5
+   - libgcc_s.so.1
+   - libstdc++.so.6
+   - libm.so.6
+   - libdl.so.2
+   - librt.so.1
+   - libcrypt.so.1
+   - libc.so.6
+   - libnsl.so.1
+
+** manylinux1でインストールを期待してよいライブラリ(2)
+
+   - libutil.so.1
+   - libpthread.so.0
+   - libX11.so.6
+   - libXext.so.6
+   - libXrender.so.1
+   - libICE.so.6
+   - libSM.so.6
+   - libGL.so.1
+   - libgobject-2.0.so.0
+   - libgthread-2.0.so.0
+   - libglib-2.0.so.0
+
+
+** auditwheel
+
+   - linux向けwheelをmanylinux1に変換するツール
    - manylinux1を満たしているかチェック
    - 依存ライブラリをwheelに同梱させる
+   - wheelファイル名のplatform tagをmanylinux1に変更
+
+** dockerを利用してパッケージを作成する
+
+   - docker イメージが用意されている
+     - quay.io/repository/pypa/manylinux1_x86_64
+   - CIでこのイメージを利用してパッケージングする
+     - werckerやgitlabでは直接dockerイメージを利用できる
+     - travisなどでもCIのワークフロー中にdockerイメージを利用できる
+
+** werckerでやってみよう
+
+  #+ATTR_LATEX: :font \scriptsize
+   #+BEGIN_src yaml
+box:
+  id: quay.io/pypa/manylinux1_x86_64
+  registry: quay.io
+build:
+  steps:
+    - script:
+        name: build
+        code: |
+          /opt/python/cp35-cp35m/bin/python setup.py build
+    - script:
+        name: test
+        code: |
+          /opt/python/cp35-cp35m/bin/python setup.py test
+    - script:
+        name: pack
+        code: |
+          /opt/python/cp35-cp35m/bin/python setup.py bdist_wheel
+    - script:
+        name: audit
+        code: |
+          auditwheel repair dist/*.whl -w wheelhouse
+
+   #+END_src
 
 ** TODO PEP 491 -- The Wheel Binary Package Format 1.9
 
@@ -156,6 +253,7 @@
 
   - setuptoolsとpipの実装でなんとなく決まっている
   - `setup.py install` ができればsdist?
+
 ** setuptoolsがなくてもwheelパッケージは作成できる
    - wheelツールはsetuptoolsと独立して作られている
    - distlibにもwheelを作成する処理が実装されている
@@ -172,6 +270,7 @@
    - setup.py install は関係なかった
 
 ** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
+
    - パッケージング方法やそれに必要なツールを支持する
    - pypi上でwheel作成する目的？
    - パッケージングに必要なツールを記述
