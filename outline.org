@@ -206,22 +206,26 @@
    - distlibを使えばパッケージを操作できる（PEPで決まってる範囲で）
    - setuptoolsに依存せずにパッケージングしてみよう
 
-        #+BEGIN_SRC python
+** distlibでできること
 
-   >>> import sys
-   >>> import os
-   >>> sys.path.append(os.path.join(os.getcwd(), 'distlib-0.2.3-py3-none-any.whl'))
-   >>> import distlib
-   >>> distlib
+   - wheelパッケージ作成
+   - wheelパッケージインストール
+   - メタデータ作成
+   - パッケージリポジトリからのダウンロード
+   - インストール済パッケージのリストアップ
+** distlibを使う準備
+         #+BEGIN_SRC python
 
-        #+END_SRC
-* TODO distlibでできること
+    >>> import sys
+    >>> import os
+    >>> sys.path.append(
+    ...     os.path.join(
+    ...         os.getcwd(),
+    ...         'distlib-0.2.3-py3-none-any.whl'))
+    >>> import distlib
+    >>> distlib
 
-  - wheelパッケージ作成
-  - wheelパッケージインストール
-  - メタデータ作成
-  - パッケージリポジトリからのダウンロード
-  - インストール済パッケージのリストアップ
+         #+END_SRC
 
 * 配布物の作成
 
