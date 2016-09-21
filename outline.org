@@ -11,13 +11,15 @@
 * お前だれよ
 
   - 小田切篤
-  - BeProud
-  - Pylons/Pyramid
 
-    #+ATTR_LATEX: :width 0.3\textwidth
+    #+ATTR_LATEX: :width 0.2\textwidth
+    [[./logo_beproud.png]]
+    #+ATTR_LATEX: :width 0.2\textwidth
     [[./pylons-positive.png]]
-    #+ATTR_LATEX: :width 0.3\textwidth
+    #+ATTR_LATEX: :width 0.2\textwidth
     [[./pyramid-positive.png]]
+    #+ATTR_LATEX: :width 0.2\textwidth
+    [[./2954520.png]]
 
 * これまでのお話
 
