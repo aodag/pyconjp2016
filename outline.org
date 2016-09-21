@@ -169,7 +169,7 @@
      - manylinux1_x86_64 プラットフォーム
 
 
-** TODO manylinux1が想定するLinux環境
+** manylinux1が想定するLinux環境
 
    - Centos5.11相当
    - x86とx86_64の両方
@@ -247,21 +247,22 @@ build:
 
    #+END_src
 
-** TODO PEP 491 -- The Wheel Binary Package Format 1.9
-
 * ソースディストリビューション sdistとはなにか？
 
   - setuptoolsとpipの実装でなんとなく決まっている
   - `setup.py install` ができればsdist?
 
 ** setuptoolsがなくてもwheelパッケージは作成できる
+
    - wheelツールはsetuptoolsと独立して作られている
    - distlibにもwheelを作成する処理が実装されている
+
 ** sdistを考え直す意味
+
    - setuptools依存からの脱却
    - 明確なインストールフロー
 
-** 現状
+** 現状のインストール手順
 
    - pipがsdistをダウンロードする
    - pipがsdistを展開する
@@ -269,7 +270,7 @@ build:
    - できあがったwheelパッケージをpipがインストールする
    - setup.py install は関係なかった
 
-** TODO PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
+** PEP 518 -- Specifying Minimum Build System Requirements for Python Projects
 
    - パッケージング方法やそれに必要なツールを支持する
    - pypi上でwheel作成する目的？
@@ -277,9 +278,20 @@ build:
    - pyproject.toml
    - TOMLフォーマット
 
-** TODO PEP 516 -- Build system abstraction for pip/conda etc
+** pyproject.toml
 
-   - ツールの指定方法
+   #+BEGIN_SRC toml
+   [build-system]
+   requires = ["setuptools", "wheel"]
+   #+END_SRC
+
+** PEP 516 -- Build system abstraction for pip/conda etc
+
+   - ビルドツールの指定や依存性を記述する
+   - 指定のツールでどのようにビルドするのかも指定
+   - pypi.jsonというファイルで話が進んでいるっぽい
+   - でも多分pyproject.tomの tool セクションが同じものを指しているはず
+
 
 * TODO プログラミングPythonパッケージ
 
