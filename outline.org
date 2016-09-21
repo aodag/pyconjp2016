@@ -34,32 +34,6 @@
   - バイナリパッケージ
   - パッケージングを支える技術に支えられてみよう
 
-* TODO パッケージングを支えるPEP
-
-  - https://packaging.python.org/specifications/
-  - setuptools/easy_install/egg はPEPと関係なく作られていた
-
-** TODO PEP 345 -- Metadata for Python Software Packages 1.2
-
-
-** TODO PEP 425 -- Compatibility Tags for Built Distributions
-
-** PEP 426 -- Metadata for Python Software Packages 2.0
-   - パッケージのメタデータ
-   - ソースコード以外の情報
-   - 作者やライセンスなどの情報
-   - 依存ライブラリなどの構成
-   - エントリポイントなどのプラガブルな仕組み
-   - スクリプトの指定
-
-** TODO PEP 496 -- Environment Markers
-
-** TODO PEP 440 -- Version Identification and Dependency Specification
-
-** TODO PEP 508 -- Dependency specification for Python Software Packages
-
-
-
 * パッケージングを支えるツール
 ** PyPA
 
